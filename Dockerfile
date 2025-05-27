@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:24-slim
 
 WORKDIR /app
 
@@ -10,8 +10,8 @@ COPY . .
 
 ENV NODE_ENV=production
 ENV PORT=5000
-ENV MONGO_URI=mongodb://localhost:27017/node-multi-feature-app
-ENV JWT_SECRET=sit753-7.3HD
+ENV MONGO_URI=mongodb://localhost:27017/sit753
+# ENV JWT_SECRET=sit753-7.3HD
 
 EXPOSE 5000
 
