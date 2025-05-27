@@ -21,7 +21,6 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    // Create and return JWT
     const payload = {
       user: {
         id: user.id
@@ -43,14 +42,10 @@ exports.register = async (req, res) => {
   }
 };
 
-// @route   POST api/auth/login
-// @desc    Authenticate user & get token
-// @access  Public
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if user exists
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: 'Invalid Credentials' });
@@ -62,7 +57,6 @@ exports.login = async (req, res) => {
       return res.status(400).json({ msg: 'Invalid Credentials' });
     }
 
-    // Create and return JWT
     const payload = {
       user: {
         id: user.id
@@ -84,9 +78,6 @@ exports.login = async (req, res) => {
   }
 };
 
-// @route   GET api/auth/me
-// @desc    Get user data
-// @access  Private
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
