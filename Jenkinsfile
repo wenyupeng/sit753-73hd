@@ -31,14 +31,24 @@ pipeline {
       steps {
         echo 'mocha tests'
         dir("${env.DIRECTORY_PATH}") {
-          sh 'pwd'
+          echo 'install dependencies and run tests'
+          sh 'npm install'
+          echo 'run unit tests'
           sh "npm test"
+          echo 'run audit for vulnerabilities'
+          sh "npm audit"
         }
       }
     }
     stage('Code Quality') {
+      environment {
+        scannerHome = tool 'Sonar-Scanner'
+      }
       steps {
         echo 'Check the quality of the code'
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+          sh 'sonar-scanner'
+        }
       }
     }
     stage('Security') {
