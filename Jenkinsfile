@@ -5,17 +5,25 @@ pipeline {
     DIRECTORY_PATH = '/usr/local/code'
     TESTING_ENVIRONMENT = 'Test'
     PRODUCTION_ENVIRONMENT = 'production'
+    PROJECT_NAME = 'sit753-73hd'
+    DOCKER_IMAGE_VERSION = 'v1'
   }
   stages {
     stage('Build') {
       steps {
-        echo 'Enter the directory path specified by the environment variable'
-        dir("${DIRECTORY_PATH}") {
-          echo "Current directory: ${pwd()}"
-        }
-        
+
         echo 'Fetch the source code from the directory path specified by the environment variable'
-        git branch: 'main', url: 'https://github.com/wenyupeng/sit753-73hd.git'
+        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/wenyupeng/sit753-73hd.git']])
+
+        echo 'Compiling the code and building Docker image'
+        script {
+          sh 'docker build -t ${PROJECT_NAME}:${DOCKER_IMAGE_VERSION} .'
+        }
+
+        script {
+          env.DOCKER_IMAGE_VERSION = "v${(env.DOCKER_IMAGE_VERSION - 'v').toInteger() + 1}"
+        }
+
         echo 'Compile the code and generate any necessary artefacts'
       }
     }
