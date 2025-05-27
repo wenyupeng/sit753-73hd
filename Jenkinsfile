@@ -29,8 +29,11 @@ pipeline {
     }
     stage('Test') {
       steps {
-        echo 'Unit tests'
-        echo 'Integration tests'
+        echo 'mocha tests'
+        dir("${env.DIRECTORY_PATH}") {
+          sh 'pwd'
+          sh "npm test"
+        }
       }
     }
     stage('Code Quality') {
