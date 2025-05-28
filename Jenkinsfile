@@ -2,7 +2,7 @@
 pipeline {
   agent any
   environment {
-    DIRECTORY_PATH = '/var/lib/jenkins/workspace/sit753-73hd/task'
+    DIRECTORY_PATH = '/var/lib/jenkins/workspace/sit753-task/task'
     TESTING_ENVIRONMENT = 'Test'
     PRODUCTION_ENVIRONMENT = 'production'
     PROJECT_NAME = 'sit753-73hd'
