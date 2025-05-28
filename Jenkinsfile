@@ -104,7 +104,7 @@ pipeline {
             "docker pull ${IMAGE_NAME} && \\
             docker stop sit753-73hd || true && \\
             docker rm sit753-73hd || true && \\
-            docker run -d -p 5000:5000 --name sit753-73hd --network app-network --restart always ${IMAGE_NAME}"
+            docker run -d -p 5000:5000 --name sit753-73hd --network app-network -e JWT_SECRET="sit753-7.3HD" --restart always ${IMAGE_NAME}"
         """
 
         echo '[INFO] Application deployed to testing environment successfully.'
@@ -118,7 +118,7 @@ pipeline {
             "docker pull ${IMAGE_NAME} && \\
             docker stop sit753-73hd || true && \\
             docker rm sit753-73hd || true && \\
-            docker run -d -p 5000:5000 --name sit753-73hd --network app-network --restart always ${IMAGE_NAME}"
+            docker run -d -p 5000:5000 --name sit753-73hd --network app-network -e JWT_SECRET="sit753-7.3HD" --restart always ${IMAGE_NAME}"
         """
         echo 'Application deployed to product environment successfully'
       }
