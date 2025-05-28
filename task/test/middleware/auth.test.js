@@ -42,8 +42,8 @@ describe('Auth Middleware', function() {
         const fakeToken = 'valid.token.here';
         const decoded = { user: { id: '123' } };
         req.header.withArgs('x-auth-token').returns(fakeToken);
-
-        sandbox.stub(jwt, 'verify').withArgs(fakeToken, process.env.JWT_SECRET).returns(decoded);
+        let salt =  process.env.JWT_SECRET || 'sit753-7.3HD';
+        sandbox.stub(jwt, 'verify').withArgs(fakeToken, salt).returns(decoded);
 
         auth(req, res, next);
 
