@@ -11,7 +11,8 @@ module.exports = function(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET  || 'sit753-7.3HD');
+    let secretKey = process.env.JWT_SECRET  || 'sit753-7.3HD'
+    const decoded = jwt.verify(token, secretKey);
     req.user = decoded.user;
     next();
   } catch (err) {

@@ -27,9 +27,10 @@ exports.register = async (req, res) => {
       }
     };
 
+    let salt = process.env.JWT_SECRET || 'sit753-7.3HD';
     jwt.sign(
       payload,
-      process.env.JWT_SECRET || 'sit753-7.3HD',
+      salt,
       { expiresIn: '5d' },
       (err, token) => {
         if (err) throw err;
@@ -63,9 +64,10 @@ exports.login = async (req, res) => {
       }
     };
 
+    let salt = process.env.JWT_SECRET  || 'sit753-7.3HD';
     jwt.sign(
       payload,
-      process.env.JWT_SECRET  || 'sit753-7.3HD',
+      salt,
       { expiresIn: '5d' },
       (err, token) => {
         if (err) throw err;
