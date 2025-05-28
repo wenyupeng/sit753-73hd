@@ -16,7 +16,7 @@ pipeline {
 
         echo 'Fetch the source code from the directory path specified by the environment variable'
         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/wenyupeng/sit753-73hd.git']])
-        sh 'git pull'
+        sh 'git pull origin main'
         echo 'Compiling the code and building Docker image'
         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
           sh "docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}"
