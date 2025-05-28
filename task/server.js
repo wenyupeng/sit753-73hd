@@ -3,8 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('./lib/logger').logger;
+const {register, collectDefaultMetrics} = require('prom-client');
 
 const app = express();
+
+collectDefaultMetrics()
 
 app.use(cors());
 app.use(express.json());
@@ -15,6 +18,11 @@ connectDB();
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
+
+app.get('/metrics', async (req, res) => {
+    res.send(await register.metrics());
+});
+
 
 app.get('/', (req, res) => {
     if (req.accepts('html')) {
